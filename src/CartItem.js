@@ -18,8 +18,30 @@ class CartItem extends React.Component{
     //3. arrow functions
 
      increaseQuantity = () =>{
-       
-        this.state.qty +=1;
+       // this will increase quantity but it won't show on the output
+       // this.state.qty +=1;
+        // We need to set state to manage it . setState method is inherited from React.Component
+        // It will re render our component for updated value
+        //setState form 1  
+        // this.setState({
+        //     qty: this.state.qty + 1
+        // });
+
+        // setState form 2
+        this.setState((prevState) => {
+            return {
+                qty: prevState.qty + 1
+            }
+        });
+    
+    }
+    descreaseQuantity =() =>{
+
+        this.setState((prevState) => {
+            return {
+                qty: prevState.qty - 1
+            }
+        });
     }
 
     render(){
@@ -39,8 +61,11 @@ class CartItem extends React.Component{
                         alt="increase" 
                         className="action-icons" 
                         src="https://image.flaticon.com/icons/svg/992/992651.svg"
-                        onClick={this.increaseQuantity.bind(this)}/>
-                    <img alt="decrease" className="action-icons" src="https://image.flaticon.com/icons/svg/659/659892.svg"/>
+                        onClick={this.increaseQuantity}/>
+                    <img alt="decrease" 
+                        className="action-icons" 
+                        src="https://image.flaticon.com/icons/svg/659/659892.svg"
+                        onClick={this.descreaseQuantity}/>
                     <img alt="delete" className="action-icons" src="https://image.flaticon.com/icons/svg/447/447047.svg"/>
                     </div>
                 </div>
