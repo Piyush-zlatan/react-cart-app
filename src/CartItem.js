@@ -3,15 +3,16 @@ import React from 'react';
 class CartItem extends React.Component{
     //Adding state: State is a way to save data locally for that component
     // Adding state using constructor
-    constructor(){
-        super();
-        this.state={
-            price:999,
-            title:'Phone',
-            qty:1,
-            img:'' 
-        }
-    }
+    
+    // constructor(){
+    //     super();
+    //     this.state={
+    //         price:999,
+    //         title:'Phone',
+    //         qty:1,
+    //         img:'' 
+    //     }
+    // }
     //Binding can be done by 3 ways...
     //1. Bind in constructor
     //2. this.increaseQuantity.bind(this) during calling
@@ -50,7 +51,7 @@ class CartItem extends React.Component{
     }
 
     render(){
-        const {price,title,qty} = this.state;
+        const {price,title,qty} = this.props.product;
         return(
             <div className="cart-item">
                 <div className="left-block">
