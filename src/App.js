@@ -80,7 +80,18 @@ getCartCount =()=>{
   })
 
   return count;
-} 
+}
+
+getTotalPrice = ()=>{
+  const {products}  = this.state;
+
+  let total=0;
+
+  products.map((product) => {
+    total += product.qty * product.price;
+  })
+  return total;
+}
 
   render(){
     const {products} = this.state;
@@ -92,6 +103,7 @@ getCartCount =()=>{
       onIncreaseQuantity={this.handleIncreaseQuantity}
       onDecreaseQuantity={this.handleDecreaseQuantity}
       onDeleteProduct={this.handleDeleteProduct}/>
+      <div style={{fontSize:20,padding:10}}>TOTAL:{this.getTotalPrice()}</div>
     </div>
   );
 }
