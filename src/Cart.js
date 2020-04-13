@@ -28,6 +28,35 @@ class Cart extends React.Component{
           
     }
 }
+
+    handleIncreaseQuantity = (product) =>{
+        console.log('Please increase quay');
+        const {products} = this.state;
+        const index = products.indexOf(product);
+
+        products[index].qty +=1;
+
+        this.setState({
+            products: products
+        })
+    }
+
+    handleDecreaseQuantity = (product) =>{
+        const {products} = this.state;
+        const index = products.indexOf(product);
+
+        if(products[index].qty==0){
+            return;
+        }
+
+        products[index].qty -=1;
+
+        this.setState({
+            // As the key and value are same, so products:products is equal to products.
+            //ShortHands
+            products
+        })
+    }
 // if we are passing same component for differnt prop then react doesnot know how to differentiate
 // so we need to pass a key as well.
     render(){
@@ -35,7 +64,9 @@ class Cart extends React.Component{
         return(
             <div className="cart"> 
             {products.map((product) =>{
-                return <CartItem product = {product} key={product.id}/>
+                return <CartItem product = {product} key={product.id}
+                    onIncreaseQuantity={this.handleIncreaseQuantity}
+                    onDecreaseQuantity={this.handleDecreaseQuantity}/>
             })}
             </div>
         );
