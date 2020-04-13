@@ -57,6 +57,16 @@ class Cart extends React.Component{
             products
         })
     }
+
+    handleDeleteProduct = (id) =>{
+        const {products} =this.state;
+        const items = products.filter((item)=> item.id !== id);
+        console.log(items)
+        this.setState({
+            products:items
+        })
+
+    }
 // if we are passing same component for differnt prop then react doesnot know how to differentiate
 // so we need to pass a key as well.
     render(){
@@ -66,7 +76,8 @@ class Cart extends React.Component{
             {products.map((product) =>{
                 return <CartItem product = {product} key={product.id}
                     onIncreaseQuantity={this.handleIncreaseQuantity}
-                    onDecreaseQuantity={this.handleDecreaseQuantity}/>
+                    onDecreaseQuantity={this.handleDecreaseQuantity}
+                    onDeleteProduct={this.handleDeleteProduct}/>
             })}
             </div>
         );
