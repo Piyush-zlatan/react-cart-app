@@ -12,7 +12,9 @@ class App extends React.Component {
         products:[],
         loading:true
       
-}
+  }
+  // Instead of calling firebase.firestore multiple times we called it into constructor
+  this.db = firebase.firestore();
 }
 
 componentDidMount(){
@@ -40,8 +42,7 @@ componentDidMount(){
 
   //   })
 
-  firebase
-    .firestore()
+ this.db
     .collection('products')
     .onSnapshot((snapshot) => {     //onSnapshot is called whenever there is something changed in coleection
       console.log(snapshot.docs);
@@ -71,11 +72,23 @@ handleIncreaseQuantity = (product) =>{
     const {products} = this.state;
     const index = products.indexOf(product);
 
-    products[index].qty +=1;
+    // products[index].qty +=1;
 
-    this.setState({
-        products: products
+    // this.setState({
+    //     products: products
+    // })
+    const docRef = this.db.collection('products').doc(products[index].id);
+
+    docRef.update({
+      qty: product[index].qty + 1
     })
+    .then(()=>{
+      console.log('Document updated')
+    })
+    .catch((error)=>{
+      console.log(error);
+    })
+
 }
 
 handleDecreaseQuantity = (product) =>{
@@ -129,11 +142,30 @@ getTotalPrice = ()=>{
   return total;
 }
 
+  addProduct = () =>{
+   this.db
+      .collection('products')
+      .add({
+        img:'',
+        price: 900,
+        qty: 3,
+        title:'washing machine'
+      })
+      .then((docRef)=>{
+        console.log('Product has been added',docRef);
+      })
+      .catch((error)=>{
+        console.log('Error',error);
+      })
+
+  }
+
   render(){
     const {products,loading} = this.state;
   return (
     <div className="App">
       <Navbar count={this.getCartCount()}/>
+      {/* <button onClick={this.addProduct} style={{padding:20, fontSize:20}}>Add a product</button> */}
       <Cart
       products ={products}
       onIncreaseQuantity={this.handleIncreaseQuantity}
